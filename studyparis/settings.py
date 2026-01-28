@@ -27,7 +27,12 @@ SECRET_KEY = 'django-insecure-wy^^5ewwi65_2xt=+z#s%jx&bc4xs+utu#rcf)xfnm!pig)r%(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'www.studyfollowup.vercel.app',
+    'studyfollowup.vercel.app',
+]
 
 AUTH_USER_MODEL = 'paris.User'
 
