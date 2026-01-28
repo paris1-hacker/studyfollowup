@@ -1,16 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Room, Topic, Message
+from .models import Room, Topic, Message, User
 from .forms import RoomForm
 from django.db.models.aggregates import Count
 from django.db.models import Q
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from .models import Message
-from .forms import userForm
+from .forms import userForm, MyCustomUserCreattionForm
 
 
 def home(request):
@@ -119,15 +119,15 @@ def loginPage(request):
         return redirect('home')
     
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email = email)
         except:
             messages.error(request, 'No user Exist with that username')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user != None:
             login(request, user)
@@ -142,10 +142,10 @@ def logoutPage(request):
     return redirect('home')
 
 def registerPage(request):
-    form = UserCreationForm
+    form = MyCustomUserCreattionForm
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = MyCustomUserCreattionForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
@@ -199,7 +199,7 @@ def editProfile(request):
     form = userForm(instance=user)
 
     if request.method == 'POST':
-        form = userForm(request.POST, instance=user)
+        form = userForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)

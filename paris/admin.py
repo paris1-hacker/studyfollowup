@@ -14,3 +14,8 @@ class TopicAdmin(admin.ModelAdmin):
 @admin.register(models.Message)
 class MessageAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.User)
+class UserAdmin(admin.ModelAdmin):
+    pass
