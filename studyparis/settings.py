@@ -30,8 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'www.studyfollowup.vercel.app',
-    'studyfollowup.vercel.app',
+  
 ]
 
 AUTH_USER_MODEL = 'paris.User'
@@ -141,12 +140,13 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    os.path.join(BASE_DIR, 'static'),   
 ]
 
-STATICFILES_DIRS= [
-    BASE_DIR / 'static'
-]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
